@@ -1,0 +1,151 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.1.0",
+    "title": "Simple points tracking application"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Transactions"
+    },
+    {
+      "name": "Points"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/transactions": {
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Creates a new transaction",
+        "parameters": [
+          {
+            "name": "transaction",
+            "in": "body",
+            "description": "Transaction data to create",
+            "schema": {
+              "$ref": "#/definitions/Transaction"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction is saved or redeemed",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/points/balance": {
+      "get": {
+        "tags": [
+          "Points"
+        ],
+        "summary": "Queries current points balance",
+        "responses": {
+          "200": {
+            "description": "Balance is received. Each key - value pair represents payer name and amount of points"
+          }
+        }
+      }
+    },
+    "/points/spend": {
+      "post": {
+        "tags": [
+          "Points"
+        ],
+        "summary": "Spends points",
+        "parameters": [
+          {
+            "name": "spending",
+            "in": "body",
+            "description": "Spending to use",
+            "schema": {
+              "$ref": "#/definitions/Spending"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Points are spent. Each key - value pair in response represents payer name and change of point balance"
+          },
+          "401": {
+            "description": "Insufficient points to spend",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Transaction": {
+      "required": [
+        "payer",
+        "points",
+        "timestamp"
+      ],
+      "properties": {
+        "payer": {
+          "type": "string",
+          "description": "Name of the payer",
+          "example": "DANNON"
+        },
+        "points": {
+          "type": "integer",
+          "description": "Amount of points within transaction",
+          "example": 1000
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "Transaction event timestamp",
+          "example": "2020-11-01T14:00:00Z"
+        }
+      }
+    },
+    "Spending": {
+      "required": [
+        "points"
+      ],
+      "properties": {
+        "points": {
+          "type": "integer",
+          "description": "Amount of points to spend",
+          "example": 500
+        }
+      }
+    },
+    "Message": {
+      "required": [
+        "type",
+        "message"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of message",
+          "example": "info"
+        },
+        "message": {
+          "type": "string",
+          "description": "Message content"
+        }
+      }
+    }
+  }
+}
