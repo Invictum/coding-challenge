@@ -56,7 +56,7 @@
         }
       }
     },
-    "/points/balance": {
+    "/points": {
       "get": {
         "tags": [
           "Points"

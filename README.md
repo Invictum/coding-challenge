@@ -117,7 +117,7 @@ If all works as expected you should see `Listening at http://localhost:[PORT]` l
 Application provides 3 routes in accordance to the exercise requirements
 
 ```
-GET http://localhost:3000/points/balance
+GET http://localhost:3000/points
 POST http://localhost:3000/points/spend
 POST http://localhost:3000/transactions
 ```

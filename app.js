@@ -30,7 +30,7 @@ app.post('/transactions', (req, res) => {
     res.json(message('Transaction has been processed', 'info'))
 })
 
-app.get('/points/balance', (req, res) => {
+app.get('/points', (req, res) => {
     res.json(storage.balance())
 })
 
