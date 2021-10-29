@@ -110,12 +110,12 @@
         "payer": {
           "type": "string",
           "description": "Name of the payer",
-          "example": "DANNON"
+          "example": "E CORP"
         },
         "points": {
           "type": "integer",
           "description": "Amount of points within transaction",
-          "example": 1000
+          "example": 100
         },
         "timestamp": {
           "type": "string",
@@ -132,7 +132,7 @@
         "points": {
           "type": "integer",
           "description": "Amount of points to spend",
-          "example": 500
+          "example": 42
         }
       }
     },

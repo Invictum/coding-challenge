@@ -1,8 +1,8 @@
 # coding-challenge
 
-The app is built on top of Node and Express.js. These options were chosen based on the relatively simple business logic
-and application requirements. It is better to consider more specialized frameworks (like Spring) for long term support
-and evolution.
+The app is built on top of Node and Express.js. This technology stack was chosen based on the relatively simple business
+logic and application requirements. It is better to consider more specialized frameworks (like Spring) for long term
+support and evolution.
 
 ## Table of Contents
 
@@ -19,28 +19,24 @@ Several installation options are available.
 
 ### Docker based
 
-This method requires docker installation. Steps depending on underlying OS, but usually it just an app download and
-installation. Follow the installation steps from [official docker](https://docs.docker.com/get-docker) website. Further
-steps assumes docker is installed, running and available at terminal.
+This method assumes the Docker application is installed, running and available at console. Steps to set up the Docker
+application depend on underlying OS, but usually it is just an app download and installation. Follow the installation
+steps from [official docker](https://docs.docker.com/get-docker) website.
 
-This method requires docker installation. Exact steps vary depending on the underlying OS, but it's usually just
-downloading of the app and installing it. Follow the installation instructions from
-the [official docker](https://docs.docker.com/get-docker) website (https://docs.docker.com/get-docker). The Next Steps
-assume docker is installed, running and available on the terminal.
-
-Now two options are available: using [prebuild image](#prebuild-image)
+With Docker, you have two options: use [prebuild image](#prebuild-image) (the fastest way to start)
 or [build image form sources](#build-image-from-sources)
 
 #### Prebuild image
 
-This is the easiest way to launch the application. Run the application with the following command in the terminal
+Run the application with the following command in the Command Line / Terminal
 
 ```
 docker run --rm -p 3000:3000 zim182/code-challenge:latest
 ```
 
-In the above example, the application is running on the local port `3000`. If it is already in use, then the first
-number after the `-p` parameter can be updated to customize it. E. g. run application on local port `8080`
+Now the application is running on the local port `3000`. If you get the error that it is already in use, just update the
+first number after the `-p` parameter with any other port, for example, try to run the application on the local
+port `8080`
 
 ```
 docker run --rm -p 8080:3000 zim182/code-challenge:latest
@@ -48,7 +44,7 @@ docker run --rm -p 8080:3000 zim182/code-challenge:latest
 
 #### Build image from sources
 
-1. Get the repository with application code. If `git` is installed and available in terminal repository can be pulled
+1. Clone the repository with application code. If `git` is installed and available in terminal repository can be pulled
    with following command
 
 ```
@@ -57,29 +53,36 @@ git clone https://github.com/Invictum/coding-challenge.git`
 
 Alternatively source code can be
 downloaded [directly](https://github.com/Invictum/coding-challenge/archive/refs/heads/main.zip) from github. After
-download `main.zip` archive should be unziped with any default tool available in OS.
+download `main.zip` archive should be unziped with any default tool available in OS. You can read more about
+GIT [here](https://git-scm.com)
 
-2. Open the terminal in the directory with source code.
-3. Build the docker image with application using following terminal command
+2. In Terminal navigate to the directory with source code.
+
+```
+cd coding-challenge/
+```
+
+4. Build the docker image with application
 
 ```
 docker build . -t code-challange
 ```
 
-4. Then run the application with
+4. Run the application
 
 ```
 docker run --rm -p 3000:3000 code-challange
 ```
 
-Local port can be updated the same way as described in [prebuild image](#prebuild-image) section of this manual
+Local port can be updated in the same way as described in [prebuild image](#prebuild-image) section of this manual
 
 ### Local environment based
 
-This option requires Node.js local installation. Steps also depend on OS, download installation package
-form [official site](https://nodejs.org/en/download/) and follow installation steps.
+If you have Node.js installed locally or prefer to install it, you can use this approach. Exact steps depend on OS as
+well, so just download the installation package from the [official site](https://nodejs.org/en/download/) and follow
+installation steps.
 
-1. Get the repository with application code. If `git` is installed and available in terminal repository can be pulled
+1. Clone the repository with application code. If `git` is installed and available in terminal repository can be pulled
    with following command
 
 ```
@@ -88,10 +91,16 @@ git clone https://github.com/Invictum/coding-challenge.git`
 
 Alternatively source code can be
 downloaded [directly](https://github.com/Invictum/coding-challenge/archive/refs/heads/main.zip) from github. After
-download `main.zip` archive should be unziped with any default tool available in OS.
+download `main.zip` archive should be unziped with any default tool available in OS. You can read more about
+GIT [here](https://git-scm.com)
 
-2. Open the terminal in the directory with source code.
-3. Install all dependencies required for the app via command in terminal.
+2. In Terminal navigate to the directory with source code.
+
+```
+cd coding-challenge/
+```
+
+4. Install all dependencies required for the app
 
 ```
 npm ci
@@ -103,14 +112,14 @@ npm ci
 node app.js
 ```
 
-If default local port `3000` is already it can be redefined by passing port number as parameter. E. g. run application
-on local port `8080`
+If default local port `3000` is already in use, it can be redefined by passing port number as parameter. E. g. try
+running the application on local port `8080`
 
 ```
 node app.js 8080
 ```
 
-If all works as expected you should see `Listening at http://localhost:[PORT]` log entry in the console.
+If the application is started, you should see `Listening at http://localhost:[PORT]` log entry in the console.
 
 ## Usage
 
@@ -123,8 +132,8 @@ POST http://localhost:3000/transactions
 ```
 
 For convenience swagger-ui is available at [http://localhost:3000/api-docs](http://localhost:3000/api-docs). It provides
-easy way to explore application and allows to play with its API.
+easy way to explore application and allows playing with its API.
 
 > **Notice**
 >
-> If non default port was used don't forget to update mentioned URLs.
+> If non default port was used, the same port should be used in Swagger URL.

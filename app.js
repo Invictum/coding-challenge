@@ -12,11 +12,14 @@ app.use('/api-docs', (req, res, next) => {
     next()
 }, swaggerUi.serve, swaggerUi.setup())
 
+// Port configuration
 const port = process.argv.slice(2)[0] || 3000
 app.listen(port, '0.0.0.0', () => console.log(`Listening at http://localhost:${port}`))
 
+// Adding json support
 app.use(express.json())
 
+// Routes definition
 app.post('/transactions', (req, res) => {
     // Validate transaction object
     const requiredNames = ['payer', 'points', 'timestamp']

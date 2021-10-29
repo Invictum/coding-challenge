@@ -40,16 +40,19 @@ class InMemoryStorage {
 
     /**
      * Processes transaction record, logic depends on points amount. For positive values transaction object simple saved
-     * into the storage. For negative values oldest records are used to redeem the amount of negative transaction. If no
-     * enough transactions are present to redeem nothing happens. Negative value transaction isn't saved in a storage.
+     * into the storage. For negative values oldest records for the same payer are used to redeem the amount of negative
+     * transaction. If only a fraction of transaction points is sufficient to redeem negative transaction it will be
+     * updated to reflect remaining points. If no enough transactions are present to redeem, leftovers of negative
+     * transaction will be skipped. Negative value transaction isn't saved in a storage.
      *
      * @param transaction object with 'payer', 'points' and 'timestamp' mandatory fields
      */
     add(transaction) {
         if (transaction['points'] > 0) {
+            // Insert positive balance transaction
             this.transactions.insert(transaction)
         } else {
-            // Negative points flow
+            // Negative balance transaction flow
             const candidates = this.transactions.array.filter(record => record['payer'] === transaction['payer'])
             let points = transaction['points']
             while (points < 0 && candidates.length > 0) {
@@ -65,7 +68,8 @@ class InMemoryStorage {
     }
 
     /**
-     * Tries to spend specified points amount
+     * Tries to spend specified points amount. Uses the oldest transactions to redeem first regardless of payer. If only
+     * a fraction of transaction points is sufficient to redeem spending it will be updated to reflect remaining points.
      *
      * @param {number} pointsToSpend
      * @return Object in which each key - value pair represents payer name and amount of spent points. Returns
