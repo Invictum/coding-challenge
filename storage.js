@@ -4,6 +4,13 @@ function sum(a, b) {
     return a + b
 }
 
+/**
+ * Updates object's value under specified key. If key is absent sets its value to passed value, increments it otherwise
+ *
+ * @param obj to update key-value in
+ * @param key to update
+ * @param value to increment or set
+ */
 function upsert(obj, key, value) {
     obj[key] = key in obj ? obj[key] + value : value
 }
@@ -61,7 +68,7 @@ class InMemoryStorage {
      * Tries to spend specified points amount
      *
      * @param {number} pointsToSpend
-     * @return Object in which each key - value pair represents payer name and amount of redeemed points. Returns
+     * @return Object in which each key - value pair represents payer name and amount of spent points. Returns
      * undefined if not enough points available
      */
     spend(pointsToSpend) {

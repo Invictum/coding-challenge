@@ -46,6 +46,12 @@
             "schema": {
               "$ref": "#/definitions/Message"
             }
+          },
+          "400": {
+            "description": "Invalid parameters provided",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
           }
         }
       }
@@ -83,7 +89,7 @@
           "200": {
             "description": "Points are spent. Each key - value pair in response represents payer name and change of point balance"
           },
-          "401": {
+          "400": {
             "description": "Insufficient points to spend",
             "schema": {
               "$ref": "#/definitions/Message"

@@ -12,21 +12,22 @@ app.use('/api-docs', (req, res, next) => {
     next()
 }, swaggerUi.serve, swaggerUi.setup())
 
-const port = 3000
+const port = process.argv.slice(2)[0] || 3000
 app.listen(port, '0.0.0.0', () => console.log(`Listening at http://localhost:${port}`))
 
 app.use(express.json())
 
 app.post('/transactions', (req, res) => {
     // Validate transaction object
-    if (!checkPropertiesPresence(req.body, ['payer', 'points', 'timestamp'])) {
-        res.statusCode = 401
-        res.json(message('Mandatory parameters: \'payer\', \'points\', \'timestamp\''))
+    const requiredNames = ['payer', 'points', 'timestamp']
+    if (!checkPropertiesPresence(req.body, requiredNames)) {
+        res.statusCode = 400
+        res.json(message(`Mandatory parameters: ${requiredNames.join(', ')}`))
         return res.end()
     }
     // Proceed with transaction
     storage.add(req.body)
-    res.json(message('info', 'Transaction has been processed'))
+    res.json(message('Transaction has been processed', 'info'))
 })
 
 app.get('/points/balance', (req, res) => {
@@ -35,9 +36,10 @@ app.get('/points/balance', (req, res) => {
 
 app.post('/points/spend', (req, res) => {
     // Validate spend request
-    if (!checkPropertiesPresence(req.body, ['points'])) {
-        res.statusCode = 401
-        res.json(message('Mandatory parameters: \'points\''))
+    const requiredNames = ['points']
+    if (!checkPropertiesPresence(req.body, requiredNames)) {
+        res.statusCode = 400
+        res.json(message(`Mandatory parameters: ${requiredNames.join(', ')}`))
         return res.end()
     }
     // Proceed with spending
@@ -45,11 +47,15 @@ app.post('/points/spend', (req, res) => {
     if (spent) {
         res.json(spent)
     } else {
-        res.statusCode = 401
+        res.statusCode = 400
         res.json(message('Insufficient points to spend'))
     }
 })
 
+/**
+ * Simple validation function. Checks specified object contains all the passed properties names. Doesn't actual
+ * properties values.
+ */
 function checkPropertiesPresence(obj, properties) {
     for (let i = 0; i < properties.length; i++) {
         if (!obj.hasOwnProperty(properties[i])) {
@@ -59,7 +65,10 @@ function checkPropertiesPresence(obj, properties) {
     return true
 }
 
-function message(type = 'error', message) {
+/**
+ * Util function builds response for specified message and optional type
+ */
+function message(message, type = 'error') {
     return {
         type: type,
         message: message
